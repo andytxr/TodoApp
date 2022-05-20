@@ -1,14 +1,19 @@
 const bodyParser = require('body-parser');
 const express = require('express');
-const app = express();
+const server = express();
+
+const allowCors = require('./cors');
 
 const port = 3000;
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+server.use(bodyParser.urlencoded({extended: true}));
+server.use(bodyParser.json());
+server.use(allowCors);
 
-app.listen(port, function(){
+server.listen(port, function(){
 
     console.log("Servidor rodando!");
 
 })
+
+module.exports = server
