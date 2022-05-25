@@ -24,13 +24,24 @@ export const search = () => {
 
 export const add = (description) => {
 
-    let req = axios.post(url, { description });
+    return dispatch => {
 
-    return{
+        axios.post(url, {description}).then(resp=>{
 
-        type: 'TODO_ADDED',
-        payload: req
+            dispatch({
+
+                type: 'TODO_ADDED',
+                payload: resp.data
+
+            });
+
+        }).then(resp=>{
+
+            dispatch(search());
+
+        })
 
     }
+
 
 }
