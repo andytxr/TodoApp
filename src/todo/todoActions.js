@@ -43,5 +43,65 @@ export const add = (description) => {
 
     }
 
+}
+
+export const remove = (todo) => {
+
+    return dispatch => {
+
+        axios.delete(`${url}/${todo._id}`).then(resp=>{
+
+            dispatch(search());
+
+        })
+
+    }
 
 }
+
+export const markDone = (todo) => {
+
+    return dispatch => {
+
+        axios.put(`${url}/${todo._id}`, {...todo, done: true}).then(resp=>{
+
+            dispatch({
+
+                type: 'TODO_MARKED_DONE',
+                payload: resp.data
+
+            })
+
+        }).then(resp=>{
+
+            dispatch(search());
+
+        })
+
+    }
+
+}
+
+export const markPending = (todo) => {
+
+    return dispatch => {
+
+        axios.put(`${url}/${todo._id}`, {...todo, done: false}).then(resp=>{
+
+            dispatch({
+
+                type: 'TODO_MARKED_PENDING',
+                payload: resp.data
+
+            })
+
+        }).then(resp=>{
+
+            dispatch(search());
+
+        })
+
+    }
+
+}
+
